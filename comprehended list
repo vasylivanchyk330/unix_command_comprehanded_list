@@ -260,7 +260,7 @@ sort -u file_name.txt
                 -u      # lines that only appear once; regular "unique()"
 
 
------- expantions
+------ expansions
     $PATH
     $USER                       # pass to user
     echo *, ls *.txt
@@ -310,7 +310,7 @@ sort -u file_name.txt
             green filename.txt      # grep "green" in the file
 
 
-------------------------------------------------- command commands. quick review
+------------------------------------------------- common commands. quick review
 du -- disc usage
 df -- disc free
 history -- list all the commands, good when | less; | grep 'pattern'
