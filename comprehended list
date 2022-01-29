@@ -1,0 +1,443 @@
+===============================================================================
+===============================================================================
+======================================================= Basics
+sources:
+https://www.youtube.com/watch?v=ZtqBQ68cfJc
+https://www.gnu.org
+https://www.hpc.iastate.edu/guides/unix-introduction
+
+
+
+---------------------------------------------- Unix. basic theory
+
+Types of UNIX: Sun Solaris, GNU/Linux, and MacOS X
+three parts: the kernel, the shell and the programs, its relation
+	Shell – computer interface, expose the OS services to human user or other programs,
+	    takes commands and give them to the OS to perform.
+	    it around OS like a shell around an oyster.
+	kernel – operates, eg removes it
+    Programs – commands used, eg rm
+    +
+    terminal - a program that runs a shell
+Shell – CLI
+    interprets the commands the user types in and arranges for them to be carried out
+--
+Bash
+    on most Linux-based systems the default shell program.
+--
+certain features
+	Filename Completion
+    History
+--
+Everything in UNIX is either a file or a process
+    A process is an executing program identified by a unique PID (process 	i	identifier)
+--
+inverted tree directory structure
+--
+GNU
+    is a collection of free UNIX-based software, which can be used as an operating system
+    or can be used in parts with other operating systems.
+    The use of the completed GNU tools led to the family of operating systems popularly known as Linux.
+    Most of GNU is licensed under the GNU Project.
+--
+
+
+
+--------------------------------------- basic Unix commands:
+
+cd
+cd ~        # get to a user folder -- pwd outcome /home/user
+cd /        # get to the root  -- the top level folder -- pwd outcome /
+cd ~/Desktop
+P:
+p:
+| -- use the previous output as an input
+
+chmod 777 filename.frm 	(777 -- rwxrwxrwx)
+
+whoami
+xdg-open .      # open a wd
+mkdir
+mkdir folder1
+mkdir folder1 folder2
+mkdir folder1/folder3
+mkdir -p test_l1/test_l2/test_l3  #    --parents; create folder_l3 even if no folder_l2
+pwd         # print working directory
+help a_command
+man a_command 		# manual, like as help
+ftp         #
+head file -10   # default -10
+tail file -10
+tail -f file    # automatically updates the output; never goes back to the $ == to go out use cntr+C
+clear
+
+less file       # print out by pages
+                # enable search
+                # G -- to get to the file end, q -- to quit
+
+------ date
+	%D 		# 31/01/2022
+	%d		# 01
+	%a		# Fri
+	%A		# Friday
+
+
+
+--------------------------------------- other basic Unix commands (detailed):
+
+------- ls
+            folder/next_folder/etc/
+            -l
+            -h          # human-readable form
+            -a          # --all
+            -d          # sort by time date
+            -s          # list by size
+            -S          # Sort by file size
+            -X          # sort by extensions
+            *.txt
+
+------- sudo        # run programs with the security privileges of another user (by default, as the superuser)
+                    # stands for "super user do"
+                    # the best and safest way to elevate privileges
+
+sudo apt install
+sudo bash           # switch to root user
+sudo !!             # execute the previous command
+sudo !6             # run command with historical record number 6
+sudo ls; whoami;    # run multiple commands in-line
+# add a string of text to a file
+echo ‘string-of-text’ | sudo tee -a [path_to_file]
+
+-- sudoers          # file is the seedy underbelly of sudo
+                    # controls who can use the sudo command to gain elevated privileges
+                    # is usually located at /etc/sudoers
+                    # best and safest way to edit this file is by using the visudo command
+
+-- su command       # run a particular command as another user
+su user -c command  # schema
+
+
+
+
+------- unzip
+                -d /path/to/extact/location
+                -j      # Unzip without creating new folders
+                -l      # Lists the contents without extracting
+                -o      # Overwrite files
+                -P password     # Supplies a password to unzip a protected archive file
+                -t      # Tests whether an archive file is valid
+                -x filename     # Extract the archive but do not extract the specified files
+
+
+------- wget
+            -log
+            -b url      # --background; in the background
+            -O filename.zip http://www.domain.com/filename-4.0.1.zip       # redirecting output
+            -i filename.txt     # accordingly to file/url list in the file
+            --limit-rate=200k   # limiting the download speed
+            -c url      # continue if failed
+            ---spider url       # check if remote file-s exist before a scheduled download
+            -t 50 url   # try 50 times; useful if downloading fails
+
+            --mirror    # copy entire website; there are a number of options so if needed just googl
+            -r -l1      # recursive download to website level 1
+
+
+------- ftp         # File Transfer Protocol
+                    # a standard network protocol used to transfer files to and from a remote network
+                    # FTP traffic is not encrypted. For a secure data transfer, use SCP or SFTP
+                    # must have at least read permissions on the source file and write permission on the target system
+                    # directory to un -- the local working directory
+
+ftp 192.168.42.77   # Establishing an FTP Connection
+# then basically perform server operations you want; quite
+quit
+
+
+------- touch       # change file timestamps
+                    # if no file -- create.
+            test_file_1.txt test_file_2.txt
+            -c      # --no-create;  Do not warn about or create files that do not exist
+            -r file    # --reference=file; use the times of the reference file instead of the current time
+
+
+------- rm          # removes files (if -d option is not specified)
+            -d      # --dir; Remove the listed directories if they are empty.
+            -v      # --verbose; pint out what was deleted
+            -r      # --recursive; Remove the listed directories and their contents recursively
+
+            -i      # Prompt whether to remove each file. ignores any --force option
+            --interactive [=when]       # Specify when to issue an interactive prompt, never, once, always
+            -f      #  --force; Ignore nonexistent files and missing operands, and never prompt the user. Ignore any previous --interactive (-i) option.
+
+            -ri     # might used together
+            -rv
+
+------- mv          # moves or renames files
+            mv file_2.txt test_folder/
+            mv file_2.txt ../
+            mv file_2.txt file_3.txt
+
+            -f      # Do not prompt the user before removing a destination file
+            -i      # prompt before
+
+            -n      # --no-clobber; Do not overwrite an existing file; silently do nothing instead
+            -b      # --backup;
+            -S suffix       # Append suffix to each backup file made with -b
+
+            -t directory    # --target-directory=directory
+            -T      # --no-target-directory; seize the previous -t command
+
+
+------- cp
+            -a      # --archive
+            -b
+            -i
+            -n
+            --parents   # cp --parents a/b/c existing_dir  -- copies the file c with parents a/c/ to existing_dir/a/b/c, creating any missing intermediate directories
+            -r          # with all the children's content
+
+            -S suffix
+            -t directory
+            -T
+
+------- >       # redirects an output, while deletes everything
+        >>      # append an output
+
+
+------- cat     # concatenate
+                # print out the entire content
+            file    # print out
+            file1 file2     # concatenate
+
+            -n      # --number; default = 10
+
+
+------- wc      # word count,
+                # return    line_count  word_count  byte_count  file_name
+            -l  # lines only
+            -m  # characters only
+            -w  # words only
+
+# might be used together
+ls -l | wc
+ls -la | wc     # count hidden as well
+cat file1 file2 | wc -l
+
+
+------- sort
+                file    # only print out sorted
+                file1 > file
+
+                file    # alphabetically
+                -n file # by numbers
+
+                -c      # --check; if already sorted -- exit successfully,
+                        #if not - print a diagnostic containing the first out-of-order line and exit with a status of
+                -C      # seize the -c
+                -m      # --merge; Merge the given files by sorting them as a group
+                -b      # --ignore-leading-blanks
+                -d      # --dictionary-order; only by letters, digits and blanks
+                -f      # --ignore-case; folds all into lowercase
+                -g      # --general-numeric-sort
+                -i      # --ignore-nonprinting
+                -M      # --month-sort
+                -r
+                -R      # --random-sort
+                -t separator    # --field-separator=separator
+                -u      # --unique
+
+------- uniq            # reports or omits repeated lines
+                        # but!! checking each line only for the unique only on the line after
+sort file_name.txt | uniq   # FrUsTo
+# this is quite similar to
+sort -u file_name.txt
+                -f n    # --skip-fields=n; before checking for uniqueness
+                -s n    # --skip-chars=n; before checking for uniqueness
+                -c      # --count; Print the number of times each line occurred along with the line
+                -i      # --ignore-case;
+                -d      # --repeated; prints out only repeated
+                -u      # lines that only appear once; regular "unique()"
+
+
+------ expantions
+    $PATH
+    $USER                       # pass to user
+    echo *, ls *.txt
+    ?, ls *.??                           # any character
+
+    {}                                   # for cs-values
+    touch app.{js,html,py}
+    touch {a,b,c}.txt
+    echo {1..99}                          # in a range
+    touch {1..99}.txt
+
+
+------ diff             # compare files line by line
+            -y          # --side-by-side; output in two columns
+            -i          # --ignore-case
+            -w          # --ignore-all-space
+            -u          # provides by default 3 lines of context
+            %<          # files from file 1
+            %>
+
+------ find             # find in hierarchy
+                        # !! very vast topic, a lot of documentations
+                        # good with regex
+
+             <nothing>                   # find everything
+            .                   # find in a current directory
+            . -name ' '         # finds files named ' '
+            . -name '*7*'       # finds files with '7' anywhere in name
+            . -type d           # type directory
+            . -type f
+            . -size +100k
+
+            . -type d -or . -name '*7*'
+            . -type d . -name '*7*'             # and
+            . -size +100k . -size -10000k
+
+            . name '*.py' -exec cat{} \;        # find and execute command cat
+                                                # {} -- placeholder, just has to be there
+                                                # \; -- for termination
+            -ctime              # by  change time
+            -ctime -1           # in last day, 24h
+
+
+------grep          # find in file and print out
+                    # !! very vast topic, a lot of documentations
+                    # good with regex
+            green filename.txt      # grep "green" in the file
+
+
+------------------------------------------------- command commands. quick review
+du -- disc usage
+df -- disc free
+history -- list all the commands, good when | less; | grep 'pattern'
+ps -- currently running processes; of a current user, good with 'ps a'
+top  -- display top most CPU intensive processes
+kill <PID> -- stop program running
+killall <name> -- same but with process names
+jobs -- displays jobs
+bg -- background; to resume a suspended job to the background; user can use shell
+fg  -- foreground; to resume a suspended job to the foreground; user cannot use shell
+gzip -- zip and replace
+gzip -k  -- zip and keep an original file
+gzip -d  -- decompresses
+gzip -v  -- verbosing; how much % we saved
+gunzip -- decompresses
+tar -- archive, doesnt compress
+ter -cf archive_name.tar  -- create for file name
+tae -tf archive_name.tar -- list whats there
+tar -xf file_name.tar  -- extract
+                      -C directory -- to the folder
+tar -czf archive_name.tar.gz file1 file2   --- z means to zip; add .gz
+
+nano -- text editor built in shell
+nano 1.txt
+nano new_file.txt
+
+alias al ='command'
+alias la ='ls -ls'
+alias la ="ls -ls"
+# in any other terminal session, this alias is lost
+# if you want to save for common use, go to the ~/.bashrc file (or ~/.bash_alias  -- only on some Linux distributions)
+~$ nano .bashrc
+
+sleep 10    - suspended, in seconds
+ncal -- calendar
+
+xargs       -- takes standard input of a command and transform it into list of arguments for a piped command
+cat deadPlayers.txt | rm  -- wont work
+cat deadPlayers.txt | xargs rm  -- wont work; deadPlayers.txt file consist a files name needed to be removed
+find .size +1M | xargs ls -l
+
+ln  -- create linux link
+# link is a file that refer to the same memory blocks as the original,
+# changes in link file change content in an original file
+# hard link, when original is deleted, still do its job
+# unlike soft/sym(bolic) links (they are more commonly used),
+ln -s
+
+who -- check user list
+su  -- switch user
+su - username
+passwd  -- to change passwords
+sudo passwd other
+chown user file -- change ownership
+chown -R user file -- recursively, for all the nested content as well
+                        # usually chown command used after 'sudo'
+sudo chown user:group file_or_folder
+
+permissions:
+r read, w modified, x executed, if -, not allowed (of certain action)
+- regular file, d directory, c character special file, l symlink file       #dtype
+dtype owner group all_else   # order
+-     rwx   rw-   r--
+
+chmod mode file
+chmod -u - r
+      -g + w
+      -o = x
+      -a
+# = means delete any and set this
+# there are also octal and binary notation for permissions
+
+
+
+
+
+===============================================================================
+===============================================================================
+===================Linux Shell Scripting: A Project-Based Approach to Learning
+sources:
+https://www.udemy.com/course/linux-shell-scripting-projects/
+
+
+--------------------------------------- Udemy Project 1
+
+--- commands for working with shebang sh files
+ ./demo01.sh            # to call out the .sh file script
+
+id --name ---user
+# $()  is the same as ``, but a newer
+# USER_NAME=$(id -un)  == USER_NAME=$`id -un`
+# [[]] is a new way; the old way is []
+
+-eq, -ne, -lt, -le, -gt, -ge
+
+# in the file
+# assign a var
+WORD='this is a word'
+echo "$WORD"
+
+'' -- to expend / to assign
+""  --  to use / to call
+echo "$WORD returns ${WORD}"
+
++++ 01-02
+# Display the UID and username of the user executing this script.
+# Display if the user is the root user or not.
+echo "Your UID is ${UID}"           # UID is build is var
+
+# Display the username
+USER_NAME=$(id -un)
+echo "Your username is ${USER_NAME}"
+
+# Display if the user is the root user or not.
+if [[ "${UID}" -eq 0 ]]             # equal to  0; 0 is UID for the root user
+then
+  echo 'You are root.'
+else
+  echo 'You are not root.'          # so-called the sanity checking
+fi
+
++++ 03
+# Only display if the UID does NOT match 1000.
+UID_TO_TEST_FOR='1000'
+if [[ "${UID}" -ne "${UID_TO_TEST_FOR}" ]]
+then
+  echo "Your UID does not match ${UID_TO_TEST_FOR}."
+  exit 1
+  # this means that exit if the command output status is 1 (false); the operation failed to run successfully
+fi
