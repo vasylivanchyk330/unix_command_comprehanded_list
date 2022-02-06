@@ -408,36 +408,126 @@ id --name ---user
 
 # in the file
 # assign a var
-WORD='this is a word'
-echo "$WORD"
+    WORD='this is a word'
+    echo "$WORD"
 
 '' -- to expend / to assign
 ""  --  to use / to call
-echo "$WORD returns ${WORD}"
+${var}          # e.g.  echo "$WORD returns ${WORD}"
+"${?}"          # returns a status of most recently code run (1 -- failed, 0 -- succeeded)
 
-+++ 01-02
++++++++++++ 01-02   --- Special Variables, Pseudocode, Command Substitution
 # Display the UID and username of the user executing this script.
 # Display if the user is the root user or not.
-echo "Your UID is ${UID}"           # UID is build is var
+    echo "Your UID is ${UID}"           # UID is build is var
 
 # Display the username
-USER_NAME=$(id -un)
-echo "Your username is ${USER_NAME}"
+    USER_NAME=$(id -un)
+    echo "Your username is ${USER_NAME}"
 
 # Display if the user is the root user or not.
-if [[ "${UID}" -eq 0 ]]             # equal to  0; 0 is UID for the root user
-then
-  echo 'You are root.'
-else
-  echo 'You are not root.'          # so-called the sanity checking
-fi
+    if [[ "${UID}" -eq 0 ]]             # equal to  0; 0 is UID for the root user
+    then
+      echo 'You are root.'
+    else
+      echo 'You are not root.'          # so-called the sanity checking
+    fi
 
-+++ 03
++++++++++ 03 -- Exit Statuses, Return Codes, String Test Conditionals
+
 # Only display if the UID does NOT match 1000.
-UID_TO_TEST_FOR='1000'
-if [[ "${UID}" -ne "${UID_TO_TEST_FOR}" ]]
-then
-  echo "Your UID does not match ${UID_TO_TEST_FOR}."
-  exit 1
-  # this means that exit if the command output status is 1 (false); the operation failed to run successfully
-fi
+    UID_TO_TEST_FOR='1000'
+    if [[ "${UID}" -ne "${UID_TO_TEST_FOR}" ]]
+    then
+      echo "Your UID does not match ${UID_TO_TEST_FOR}."
+      exit 1
+      # this means that exit if the command output status is 1 (false); the operation failed to run successfully
+    fi
+
+# Test if the command succeeded.
+    if [[ "${?}" -ne 0 ]]
+    then
+      echo 'The id command did not execute successfully.'
+      exit 1
+    fi
+    echo "Your username is ${USER_NAME}"
+
+# You can use a string test conditional.
+    USER_NAME_TO_TEST_FOR='vaylivanchyk330'
+    if [[ "${USER_NAME}" = "${USER_NAME_TO_TEST_FOR}" ]]
+    then
+      echo "Your username matches ${USER_NAME_TO_TEST_FOR}."
+    fi
+
+    # or my option
+    USERNAME_TO_TEST_FOR='vasylivanchyk330'
+    if [[ "${USER_NAME}" -ne "${USERNAME_TO_TEST_FOR}" ]]
+    then
+        echo "YOUR USERNAME DOES NOT MATCH"
+        exit
+    fi
+    echo "Yor Username is ${USERNAME_TO_TEST_FOR}"
+
+
+# Test for != (not equal) for the string.
+    if [[ "${USER_NAME}" != "${USER_NAME_TO_TEST_FOR}" ]]
+    then
+      echo "Your username does not match ${USER_NAME_TO_TEST_FOR}."
+      exit 1
+    fi
+
+exit 0
+
++++++++++++ 04 --  Reading Standard Input, Creating Accounts, Username
+
+------ some theory
+
+ps -ef          # processes with information
+
+read -p 'type something: ' INPUT_VAR
+# the output of the input will be stored in THE var INPUT_VAR
+
+sudo useradd
+             -c         # for a comment
+             -d         # --home-dir for the user
+             -m         # --create-home; creates user's home directory if does not exist
+             -M         # --no-create-home
+
+
+
+
+
+# This script creates an account on the local system.
+# You will be prompted for the account name and password.
+
+# Ask for the user name.
+read -p 'enter your username to create: ' USER_NAME
+
+# Ask for the real name.
+read -p 'enter your real name: ' COMMENT
+
+# Ask for the password.
+read -p 'enter your password to create: ' PASSWD
+
+# Create the user.
+useradd -c"${COMMENT}" -m ${USER_NAME}
+
+
+
+# Set the password for the user.
+# NOTE: You can also use the following command:
+#    echo "${USER_NAME}:${PASSWORD}" | chpasswd
+
+# Create the user.
+useradd -c"${COMMENT}" -m ${USER_NAME}
+
+# set the password for the user
+echo ${PASSWD} | passwd --stdin ${USER_NAME}
+
+# Force password change on first login.
+passwd -e ${USER_NAME}
+
+
+
+
+
