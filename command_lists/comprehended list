@@ -75,11 +75,15 @@ less file       # print out by pages
                 # enable search
                 # G -- to get to the file end, q -- to quit
 
+
 ------ date
 	%D 		# 31/01/2022
 	%d		# 01
 	%a		# Fri
 	%A		# Friday
+	%s      # seconds since 1970
+	%S      # seconds in the current minute
+	%N      # nanoseconds
 
 
 
@@ -94,6 +98,7 @@ less file       # print out by pages
             -s          # list by size
             -S          # Sort by file size
             -X          # sort by extensions
+            -u          # sort distinct
             *.txt
 
 ------- sudo        # run programs with the security privileges of another user (by default, as the superuser)
@@ -249,16 +254,16 @@ cat file1 file2 | wc -l
 
 ------- uniq            # reports or omits repeated lines
                         # but!! checking each line only for the unique only on the line after
-sort file_name.txt | uniq   # FrUsTo
-# this is quite similar to
-sort -u file_name.txt
+
                 -f n    # --skip-fields=n; before checking for uniqueness
                 -s n    # --skip-chars=n; before checking for uniqueness
                 -c      # --count; Print the number of times each line occurred along with the line
                 -i      # --ignore-case;
                 -d      # --repeated; prints out only repeated
                 -u      # lines that only appear once; regular "unique()"
-
+sort file_name.txt | uniq   # FrUsTo
+# this is quite similar to
+sort -u file_name.txt
 
 ------ expansions
     $PATH
@@ -327,11 +332,12 @@ gzip -d  -- decompresses
 gzip -v  -- verbosing; how much % we saved
 gunzip -- decompresses
 tar -- archive, doesnt compress
-ter -cf archive_name.tar  -- create for file name
-tae -tf archive_name.tar -- list whats there
+tar -cf archive_name.tar  -- create for file name
+tar -tf archive_name.tar -- list whats there
 tar -xf file_name.tar  -- extract
                       -C directory -- to the folder
-tar -czf archive_name.tar.gz file1 file2   --- z means to zip; add .gz
+tar -zcf archive_name.tar.gz file1 file2   --- z means to zip; add .gz
+tar -vf file.tar        -- verbose
 
 nano -- text editor built in shell
 nano 1.txt
@@ -527,7 +533,98 @@ echo ${PASSWD} | passwd --stdin ${USER_NAME}
 # Force password change on first login.
 passwd -e ${USER_NAME}
 
+===================================================
+
+!v              # rerun the last command started with v
+dirname
+basename
+
+# !!!
+command stats with space: you won't get the command with "up" button
+
+
+sudo chage -E 0 username               # make username account expired
+sudo chage -E -1 username               # make username account unexpired
+
+
+# to get to file with all users
+cat /etc/passwd
+
+
+# to get to list of available shells
+cat /etc/shells
+
+
+# to set other shell for a specific user
+sudo usermod -s /sbin/screen zeeed
+
+
+# cut
+cut -c 4-9 /etc/passwd                  # in characters
+cut -c -10,20-24,30- /etc/passwd
+cut -b 3 /etc/passwd                    # in bytes
+cut -f 3 /etc/passwd                    # in fields
+cut -d ':' -f 1 /etc/passwd             # delimits with a delimiter and in fields
 
 
 
+#grep
+grep "vasyl" /etc/passwd
+grep -v "vasyl" /etc/passwd
+grep "^s" /etc/passwd
+grep "nc$" /etc/passwd
+
+
+# awk -- to use when you need to define multiple character delimiter
+# and for handling fields with inconsistent white space delimiter
+
+awk -F 'complex_delimiter' '{print $2}' payment-data.txt | head
+# -F -- how to distinguish a field;
+# {} -- do this action
+# {print $2} -- print out second column
+awk -F 'complex_delimiter' '{print $2, $5}' payment-data.txt | head
+awk -F 'complex_delimiter' '{print $2 $5}' payment-data.txt | head
+awk -F 'complex_delimiter' '{print $2 "," $5}' payment-data.txt | head                              # same as
+awk -F 'complex_delimiter' -v OFS=',' '{print $2, $5}' payment-data.txt | head                      # output with desired separator
+awk -F '4' -v OFS='  lol  ' '{print "colomn1: "$1, "column2: " $2}' payment-data.txt | head
+awk -F 'complex_delimiter' '{print $NF}' payment-data.txt | head                                    # last column
+awk -F 'complex_delimiter' '{print ($NF-1)}' payment-data.txt | head
+
+
+# netstat  -  Print network connections, routing tables, interface statistics, masquerade connections, and multicast memberships
+
+
+# du -- disc usage
+sudo du /var
+sudo du /var | sort -r
+sudo du -h /var
+sudo du -h /var | sort -h
+
+
+# geoiplookup - look up country using IP Address or hostname
+geoiplookup 245.0.2.2.345
+
+
+# sed -- stream editor for filtering and transforming text
+# stream -- any transformation of data from one source to another
+# sed can be used:
+    # substitution
+    # remove lines
+    # append text after given lines
+    # insert before certain lines
+# it is case sensitive
+
+sed 's/Filelist/Content/' fileformats.txt             # substitute/search-pattern/replacement-string/flags' where
+                                                      # the output is just displayed, not an altered file
+sed 's/filelist/Content/i' fileformats.txt            # /i -- insensitive, ignore cases
+# s/ -- removes only the very first occurrence of a search pattern in a line
+sed 's/Filelist/Content/g' fileformats.txt            # /g -- global replace
+sed 's/Filelist/Content/2' fileformats.txt            # acts only on 2nd in a line, ignoring all other
+
+sed 's/Filelist/Content/g' fileformats.txt > a_new_file.txt
+sed 's/Filelist/Content/g' fileformats.txt
+sed -i.bak 's/Filelist/Content/g' fileformats.txt     # inplace=true, but the original file is backed up in .bak file
+
+sed 's/Filelist/Content/gw file_with_changes.txt' fileformats.txt
+# this create a file with changed lines named file_with_changes.txt
 
