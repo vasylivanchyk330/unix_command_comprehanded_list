@@ -1,8 +1,73 @@
-# my aliases
-alias uj='ssh usahsalvp301'
-alias ij='ssh ittosalvp301'
-alias master='git master'
+ MY ALIAS
+
+# sys
+alias c='clear'
+alias e='exit'
+#
+alias ..='cd ..'
+alias ..2='cd ../../'
+alias ..3='cd ../../../'
+alias ..4='cd ../../../../'
+alias ..5='cd ../../../../../'
+
+alias l.='ls -d .* --color=auto'
+alias lla='ls -la'
+alias h='history'
+alias j='jobs -l'
+
+alias path='echo -e ${PATH//:/\\n}'
+alias now='date +"%T"'
+alias nowtime=now
+alias nowdate='date +"%d-%m-%Y"'
+
+alias toali='vim ~/.bashrc'
+alias setali='source ~/.bashrc'
+
+# git
+alias g='git'
+alias stts='git status'
+alias master='git checkout master'
 alias pull='git pull'
 alias push='git push'
 alias pushu='git push --set-upstream'
 alias pushuo='git push --set-upstream origin'
+alias cho='git checkout'
+alias newb='git branch'
+
+
+
+# fca_hosts
+alias uj='ssh usahsalvp301'
+alias ij='ssh ittosalvp301'
+alias usz200='ssh usahszlps200'
+alias usz201='ssh usahszlps201'
+alias usz202='ssh usahszlps202'
+alias uah201='ssh usahahlps201'
+alias uah202='ssh usahahlps202'
+alias uah204='ssh usahahlps204'
+alias uah205='ssh usahahlps205'
+
+
+============================================================================================================================================
+#----------------
+# ansible
+alias a='ansible'
+alias ashell='ansible -m shell'
+alias ashellb='ansible -m shell -b'
+alias ap='ansible-playbook'
+# ap -i
+alias ap_i_stage_na='ansible-playbook -i inventories/staging_NA/hosts'
+alias ap_i_stage_emea='ansible-playbook -i inventories/staging_EMEA/hosts'
+alias ap_i_prod_na='ansible-playbook -i inventories/prod_NA/hosts'
+alias ap_i_prod_emea='ansible-playbook -i inventories/prod_EMEA/hosts'
+alias ap_i_sbx='ansible-playbook -i inventories/prod_sandbox/hosts'
+# ap -i cases
+#-----------------
+
+
+
+
+
+
+
+
