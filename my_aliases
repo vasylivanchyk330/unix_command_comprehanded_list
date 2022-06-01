@@ -1,0 +1,8 @@
+# my aliases
+alias uj='ssh usahsalvp301'
+alias ij='ssh ittosalvp301'
+alias master='git master'
+alias pull='git pull'
+alias push='git push'
+alias pushu='git push --set-upstream'
+alias pushuo='git push --set-upstream origin'
